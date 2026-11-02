@@ -1,0 +1,96 @@
+/* ==========================================================
+   Base: variáveis, reset e componentes reutilizáveis
+   ========================================================== */
+
+:root {
+  --navy: #0f1b3d;
+  --navy2: #1a2b5c;
+  --accent: #33c3ff;
+  --accent2: #1e9be0;
+  --brand2: #6a5cff;
+  --ok: #27c26c;
+  --warn: #ff5a5f;
+  --ink: #14171f;
+  --muted: #6b7385;
+  --card: #ffffff;
+  --soft: #f1f4f9;
+  --line: #eef1f6;
+  --shadow: 0 6px 18px rgba(15, 27, 61, .25);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: #e9eef5;
+}
+
+button {
+  font: inherit;
+  border: 0;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---------- Botões ---------- */
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  flex: 1;
+  height: 56px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.btn.go {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(30, 155, 224, .4);
+}
+
+.btn.ghost {
+  background: var(--soft);
+  color: var(--ink);
+  flex: 0 0 110px;
+}
+
+.btn.full {
+  width: 100%;
+  flex: none;
+}
+
+.circBtn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--soft);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+/* ---------- Painel inferior (bottom sheet) ---------- */
+.grab {
+  width: 42px;
+  height: 5px;
+  border-radius: 3px;
+  background: #d9dee8;
+  margin: -6px auto 12px;
+}

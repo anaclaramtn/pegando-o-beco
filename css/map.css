@@ -1,0 +1,48 @@
+/* ==========================================================
+   Mapa e marcadores
+   ========================================================== */
+
+#map {
+  position: absolute;
+  inset: 0;
+  transition: filter .5s ease, transform .5s ease;
+}
+
+/* Mapa borrado enquanto a tela inicial está aberta */
+body.locked #map {
+  filter: blur(9px) saturate(1.1);
+  transform: scale(1.06);
+  pointer-events: none;
+}
+
+.maplibregl-ctrl-attrib {
+  font-size: 9px;
+  opacity: .7;
+}
+
+.car {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, .35));
+}
+
+.destPin {
+  width: 40px;
+  height: 40px;
+}
+
+#locateBtn {
+  position: absolute;
+  right: 14px;
+  bottom: calc(24px + var(--safe-bot));
+  z-index: 4;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--shadow);
+  display: grid;
+  place-items: center;
+}

@@ -1,0 +1,60 @@
+/* ==========================================================
+   Prévia da rota (painel inferior)
+   ========================================================== */
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  background: var(--card);
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -6px 30px rgba(15, 27, 61, .2);
+  padding: 18px 18px calc(18px + var(--safe-bot));
+}
+
+#pvDest {
+  font-size: 18px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#pvAddr {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pvStats {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+#pvTime {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+#pvTime.small {
+  font-size: 20px;
+}
+
+#pvDist {
+  font-size: 16px;
+  color: var(--muted);
+}
+
+#pvArrive {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--muted);
+}

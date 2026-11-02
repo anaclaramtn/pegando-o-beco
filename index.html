@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Pegando o Beco</title>
+
+  <!-- App instalável (PWA) -->
+  <meta name="theme-color" content="#0f1b3d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Pegando o Beco">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <!-- Biblioteca do mapa -->
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+
+  <!-- Estilos do app -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/map.css">
+  <link rel="stylesheet" href="css/splash.css">
+  <link rel="stylesheet" href="css/search.css">
+  <link rel="stylesheet" href="css/preview.css">
+  <link rel="stylesheet" href="css/navigation.css">
+  <link rel="stylesheet" href="css/dialogs.css">
+
+  <!-- Código do app -->
+  <script type="module" src="js/main.js"></script>
+</head>
+<body class="locked">
+
+<div id="map"></div>
+
+<!-- ============ Tela inicial / permissão de localização ============ -->
+<div id="splash">
+  <div class="appIcon"><svg width="50" height="50" viewBox="0 0 24 24" fill="#fff"><path d="M12 2 4 21l8-4 8 4z"/></svg></div>
+  <h1>Pegando o Beco</h1>
+
+  <div class="box" id="spLoading">
+    <div class="spinner"></div>
+    <p id="spLoadingText">Carregando…</p>
+  </div>
+
+  <div class="box hidden" id="spAsk">
+    <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="#33c3ff"><path d="M12 2C8 2 5 5 5 9c0 5.3 7 13 7 13s7-7.7 7-13c0-4-3-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></div>
+    <h2>Ative sua localização</h2>
+    <p>Para te guiar pelo caminho, o Pegando o Beco precisa saber onde você está.</p>
+    <button class="btn go full" id="spAllow">Ativar localização</button>
+  </div>
+
+  <div class="box denied hidden" id="spDenied">
+    <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff5a5f" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg></div>
+    <h2>Localização não permitida</h2>
+    <p id="spDeniedText">O acesso à sua localização não foi permitido. O Pegando o Beco só funciona com essa permissão.</p>
+    <button class="btn go full" id="spRetry">Tentar novamente</button>
+
+    <div class="help" id="spDeniedHelp">
+      <div id="helpIOS" class="hidden">
+        <div class="ttl">Como liberar no iPhone:</div>
+        <ol>
+          <li>Abra o app <b>Ajustes</b>.</li>
+          <li>Vá em <b>Privacidade e Segurança › Serviços de Localização</b> e confira se está ativado.</li>
+          <li>Na mesma lista, toque no seu navegador (ex.: <b>Safari</b> ou <b>Chrome</b>) e escolha <b>“Durante o Uso”</b>.</li>
+          <li>No Safari, confira também <b>Ajustes › Apps › Safari › Localização</b> e deixe em <b>“Perguntar”</b> ou <b>“Permitir”</b>.</li>
+          <li>Volte aqui e toque em <b>“Tentar novamente”</b>.</li>
+        </ol>
+      </div>
+      <div id="helpAndroid" class="hidden">
+        <div class="ttl">Como liberar no Android:</div>
+        <ol>
+          <li>Confira se a <b>Localização</b> do celular está ligada (deslize o dedo do topo da tela para baixo).</li>
+          <li>No navegador, toque no ícone à esquerda do endereço do site › <b>Permissões</b> › <b>Localização</b> › <b>Permitir</b>.</li>
+          <li>Se não encontrar, toque em <b>⋮ › Configurações › Configurações do site › Localização</b> e libere este site.</li>
+          <li>Volte aqui e toque em <b>“Tentar novamente”</b>.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Busca ============ -->
+<div id="searchBar">
+  <div class="logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2 4 21l8-4 8 4z"/></svg></div>
+  <input id="searchInput" type="search" placeholder="Para onde vamos?" autocomplete="off" enterkeyhint="search">
+  <button id="clearBtn" class="hidden" aria-label="Limpar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <button id="menuBtn" aria-label="Opções"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button>
+</div>
+<div id="results" class="hidden"></div>
+<button id="locateBtn" aria-label="Minha localização"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f1b3d" stroke-width="2.2"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
+
+<!-- ============ Prévia da rota ============ -->
+<div id="preview" class="sheet hidden">
+  <div class="grab"></div>
+  <div id="pvDest"></div>
+  <div id="pvAddr"></div>
+  <div class="pvStats"><span id="pvTime"></span><span id="pvDist"></span><span id="pvArrive"></span></div>
+  <div class="row">
+    <button class="btn ghost" id="pvCancel">Voltar</button>
+    <button class="btn go" id="pvGo">Ir agora</button>
+  </div>
+</div>
+
+<!-- ============ Navegação ============ -->
+<div id="banner" class="hidden">
+  <div id="mIcon"></div>
+  <div class="bannerText">
+    <div id="mDist"></div>
+    <div id="mText"></div>
+  </div>
+</div>
+<div id="thenBox" class="hidden"><span>Depois</span><span id="thenIcon"></span></div>
+<div id="speed" class="hidden"><div><b id="speedVal">0</b><small>km/h</small></div></div>
+<button id="recenter" class="hidden"><svg width="18" height="18" viewBox="0 0 24 24" fill="#0f1b3d"><path d="M12 2 4 21l8-4 8 4z"/></svg>Recentralizar</button>
+<div id="navBottom" class="hidden">
+  <button class="circBtn stop" id="stopBtn" aria-label="Encerrar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <div id="etaBox"><div id="etaTime"></div><div id="etaSub"></div></div>
+  <button class="circBtn" id="muteBtn" aria-label="Som"></button>
+</div>
+
+<!-- ============ Avisos e janelas ============ -->
+<div id="toast" class="hidden"></div>
+
+<div id="arrived" class="overlay hidden">
+  <div class="card">
+    <div class="flag"><svg width="40" height="40" viewBox="0 0 24 24" fill="#27c26c"><path d="M5 21V4h10l1 2h4v9h-6l-1-2H7v8z"/></svg></div>
+    <h2>Você chegou!</h2>
+    <p id="arrivedName"></p>
+    <button class="btn go full" id="arrivedOk">Concluir</button>
+  </div>
+</div>
+
+<div id="menu" class="overlay hidden">
+  <div class="card">
+    <div class="grab"></div>
+    <h3>Opções</h3>
+    <label class="opt"><div>Instruções por voz<small>Fala as manobras em português</small></div><span class="sw"><input type="checkbox" id="optVoice" checked><span></span></span></label>
+    <label class="opt"><div>Modo simulação<small>O carro percorre a rota sozinho (para gravar parado)</small></div><span class="sw"><input type="checkbox" id="optSim"><span></span></span></label>
+    <label class="opt"><div>Velocidade da simulação<small id="simSpeedLbl">40 km/h</small></div><input type="range" id="optSimSpeed" min="10" max="120" step="5" value="40"></label>
+    <button class="btn ghost full" id="menuClose">Fechar</button>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+/* ==========================================================
+   Tela de navegação
+   ========================================================== */
+
+/* ---------- Banner da próxima manobra ---------- */
+#banner {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: calc(10px + var(--safe-top));
+  z-index: 6;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 22px;
+  box-shadow: 0 8px 28px rgba(15, 27, 61, .35);
+  padding: 14px 16px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+#mIcon {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, .08);
+  border-radius: 16px;
+}
+
+#mIcon svg {
+  width: 52px;
+  height: 52px;
+}
+
+.bannerText {
+  min-width: 0;
+  flex: 1;
+}
+
+#mDist {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+#mText {
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 5px;
+  line-height: 1.2;
+  opacity: .95;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- "Depois" (manobra seguinte) ---------- */
+#thenBox {
+  position: absolute;
+  left: 20px;
+  top: calc(112px + var(--safe-top));
+  z-index: 5;
+  background: var(--navy2);
+  color: #fff;
+  border-radius: 0 0 14px 14px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 16px rgba(15, 27, 61, .25);
+}
+
+#thenBox svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------- Barra inferior (chegada / parar / som) ---------- */
+#navBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  background: var(--card);
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -6px 30px rgba(15, 27, 61, .2);
+  padding: 14px 18px calc(14px + var(--safe-bot));
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+#etaBox {
+  flex: 1;
+  text-align: center;
+}
+
+#etaTime {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+#etaSub {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.circBtn.stop {
+  background: #ffeced;
+  color: var(--warn);
+}
+
+/* ---------- Velocímetro ---------- */
+#speed {
+  position: absolute;
+  left: 14px;
+  bottom: calc(100px + var(--safe-bot));
+  z-index: 6;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid var(--navy);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+#speed b {
+  display: block;
+  font-size: 24px;
+  line-height: 1;
+}
+
+#speed small {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* ---------- Recentralizar ---------- */
+#recenter {
+  position: absolute;
+  right: 14px;
+  bottom: calc(104px + var(--safe-bot));
+  z-index: 6;
+  height: 48px;
+  padding: 0 18px;
+  border-radius: 24px;
+  background: #fff;
+  font-weight: 700;
+  color: var(--navy);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

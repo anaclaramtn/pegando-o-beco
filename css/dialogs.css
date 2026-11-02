@@ -1,0 +1,151 @@
+/* ==========================================================
+   Avisos e janelas: toast, chegada e menu de opções
+   ========================================================== */
+
+/* ---------- Toast ---------- */
+#toast {
+  position: absolute;
+  left: 50%;
+  top: calc(130px + var(--safe-top));
+  transform: translateX(-50%);
+  z-index: 9;
+  background: rgba(20, 23, 31, .92);
+  color: #fff;
+  padding: 11px 18px;
+  border-radius: 22px;
+  font-weight: 600;
+  font-size: 15px;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+}
+
+/* ---------- Base das janelas com fundo escuro ---------- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+.overlay .card {
+  background: #fff;
+  width: 100%;
+  border-radius: 28px 28px 0 0;
+}
+
+/* ---------- Chegada ---------- */
+#arrived {
+  z-index: 10;
+  background: rgba(15, 27, 61, .55);
+}
+
+#arrived .card {
+  padding: 28px 22px calc(24px + var(--safe-bot));
+  text-align: center;
+}
+
+#arrived .flag {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #e7f9ef;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+}
+
+#arrived h2 {
+  margin: 0 0 6px;
+  font-size: 26px;
+}
+
+#arrived p {
+  margin: 0 0 20px;
+  color: var(--muted);
+}
+
+/* ---------- Menu de opções ---------- */
+#menu {
+  z-index: 11;
+  background: rgba(15, 27, 61, .45);
+}
+
+#menu .card {
+  padding: 20px 20px calc(20px + var(--safe-bot));
+}
+
+#menu .grab {
+  margin: -4px auto 10px;
+}
+
+#menu h3 {
+  margin: 4px 0 14px;
+  font-size: 19px;
+}
+
+#menuClose {
+  margin-top: 16px;
+}
+
+#optSimSpeed {
+  width: 130px;
+}
+
+.opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 2px;
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
+}
+
+.opt small {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+/* Interruptor (liga/desliga) */
+.sw {
+  position: relative;
+  width: 52px;
+  height: 30px;
+  flex: none;
+}
+
+.sw input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sw span {
+  position: absolute;
+  inset: 0;
+  background: #d4d9e3;
+  border-radius: 15px;
+  transition: .2s;
+}
+
+.sw span:before {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  left: 3px;
+  top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: .2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+}
+
+.sw input:checked + span {
+  background: var(--accent2);
+}
+
+.sw input:checked + span:before {
+  transform: translateX(22px);
+}
