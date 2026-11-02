@@ -37,10 +37,40 @@
 
 <!-- ============ Tela inicial / permissão de localização ============ -->
 <div id="splash">
+<div class="splashInner">
   <div class="appIcon"><svg width="50" height="50" viewBox="0 0 24 24" fill="#fff"><path d="M12 2 4 21l8-4 8 4z"/></svg></div>
   <h1>Pegando o Beco</h1>
 
-  <div class="box" id="spLoading">
+  <div class="box hidden" id="spInstall">
+    <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#33c3ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7M8.8 10.8 12 14l3.2-3.2"/><path d="M10.5 18.5h3"/></svg></div>
+    <h2>Adicione à tela inicial</h2>
+    <p id="spInstallText">Para funcionar, o Pegando o Beco precisa estar na tela inicial do seu celular. Depois de adicionar, abra o app pelo ícone.</p>
+    <button class="btn go full hidden" id="spInstallBtn">Adicionar à tela inicial</button>
+
+    <div class="help">
+      <div id="installIOS" class="hidden">
+        <div class="ttl">Como adicionar no iPhone:</div>
+        <ol>
+          <li>Abra este site no <b>Safari</b>.</li>
+          <li>Toque no botão <b>Compartilhar</b> (quadrado com uma seta para cima). Se não aparecer, toque antes em <b>⋯</b>.</li>
+          <li>Role a lista e toque em <b>“Adicionar à Tela de Início”</b>.</li>
+          <li>Toque em <b>“Adicionar”</b>.</li>
+          <li>Abra o <b>Pegando o Beco</b> pelo ícone na tela inicial.</li>
+        </ol>
+      </div>
+      <div id="installAndroid" class="hidden">
+        <div class="ttl">Como adicionar no Android:</div>
+        <ol>
+          <li>Abra este site no <b>Chrome</b>.</li>
+          <li>Toque em <b>⋮</b> (canto superior direito).</li>
+          <li>Toque em <b>“Adicionar à tela inicial”</b> ou <b>“Instalar app”</b> e confirme.</li>
+          <li>Abra o <b>Pegando o Beco</b> pelo ícone na tela inicial.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="box hidden" id="spLoading">
     <div class="spinner"></div>
     <p id="spLoadingText">Carregando…</p>
   </div>
@@ -80,6 +110,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <!-- ============ Busca ============ -->

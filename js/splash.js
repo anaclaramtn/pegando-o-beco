@@ -1,19 +1,19 @@
-// Tela inicial: pede a permissão de localização antes de liberar o mapa
+// Tela inicial: exige o app instalado na tela inicial e pede a permissão
+// de localização antes de liberar o mapa
 
 import { S } from './state.js';
 import { $, show, toast } from './dom.js';
 import { startGPS, stopGPS, handlePosition, setOnPermissionDenied } from './gps.js';
 import { stopNav } from './navigation.js';
-
-const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); // iPad novo se identifica como Mac
+import { IS_IOS, isInstalled, watchInstall, promptInstall } from './platform.js';
 
 /**
  * Estados da tela inicial:
- * 'loading' | 'ask' | 'denied' | 'unsupported' | 'done' (tela some e o mapa é liberado)
+ * 'install' | 'loading' | 'ask' | 'denied' | 'unsupported' | 'done' (tela some e o mapa é liberado)
  */
 function setState(state) {
   const splash = $('splash');
+  show('spInstall', state === 'install');
   show('spLoading', state === 'loading');
   show('spAsk', state === 'ask');
   show('spDenied', state === 'denied' || state === 'unsupported');
@@ -64,14 +64,28 @@ function requestLocation() {
   }, { enableHighAccuracy: true, maximumAge: 5000, timeout: 15000 });
 }
 
-/** Verifica a permissão ao abrir o app e mostra a tela certa. */
-export async function initSplash() {
-  show('helpIOS', IS_IOS);
-  show('helpAndroid', !IS_IOS);
-  $('spAllow').onclick = requestLocation;
-  $('spRetry').onclick = requestLocation;
-  setOnPermissionDenied(lockDenied);
+/** Etapa 1: o app só abre se tiver sido aberto pelo ícone da tela inicial. */
+function showInstallScreen() {
+  show('installIOS', IS_IOS);
+  show('installAndroid', !IS_IOS);
+  setState('install');
 
+  // Android/Chrome: botão que abre o pedido de instalação do próprio navegador
+  watchInstall({
+    available: () => show('spInstallBtn'),
+    installed: () => {
+      show('spInstallBtn', false);
+      show('installAndroid', false);
+      $('spInstallText').textContent = 'Pronto! Agora feche esta página e abra o Pegando o Beco pelo ícone na tela inicial.';
+    },
+  });
+  $('spInstallBtn').onclick = async () => {
+    if (!(await promptInstall())) show('spInstallBtn', false);
+  };
+}
+
+/** Etapa 2: verifica a permissão de localização e mostra a tela certa. */
+async function checkLocation() {
   if (!('geolocation' in navigator)) { setState('unsupported'); return; }
 
   let status = null;
@@ -87,4 +101,15 @@ export async function initSplash() {
   if (status === 'granted') requestLocation();
   else if (status === 'denied') setState('denied');
   else setState('ask');
+}
+
+export function initSplash() {
+  show('helpIOS', IS_IOS);
+  show('helpAndroid', !IS_IOS);
+  $('spAllow').onclick = requestLocation;
+  $('spRetry').onclick = requestLocation;
+  setOnPermissionDenied(lockDenied);
+
+  if (isInstalled()) checkLocation();
+  else showInstallScreen();
 }

@@ -1,7 +1,7 @@
 // Service worker: guarda o app no aparelho para abrir rápido e funcionar com sinal fraco.
 // IMPORTANTE: ao publicar uma nova versão, troque o número em CACHE.
 
-const CACHE = 'pegando-o-beco-v3';
+const CACHE = 'pegando-o-beco-v4';
 const TILES_CACHE = CACHE + '-tiles';
 
 const SHELL = [
@@ -39,6 +39,7 @@ const SHELL = [
   './js/navigation.js',
   './js/gps.js',
   './js/splash.js',
+  './js/platform.js',
 
   'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js',
   'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css',
